@@ -3,7 +3,7 @@
     "displayName": "Duplicate Module",
     "description": "Duplicate a folder, replace all strings and rename all files in this folder.",
     "version": "0.0.1",
-    "publisher": "leoruhland",
+    "publisher": "LeonardoRuhland",
     "engines": {
         "vscode": "^1.23.0"
     },
