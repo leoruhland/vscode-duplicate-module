@@ -13,6 +13,7 @@
     "activationEvents": [
         "onCommand:extension.duplicateModule"
     ],
+    "repository": "https://github.com/leoruhland/vscode-duplicate-module.git",
     "main": "./out/extension",
     "contributes": {
         "commands": [
