@@ -123,6 +123,8 @@ export function activate(context: vscode.ExtensionContext) {
         try {
             await fs.copy(uri.fsPath, newPath);
 
+            /*
+            FS Version
             await fs.readdir(newPath, async (err, files) => {
                 await files.forEach(async (file) => {
                     const filePath = newPath + '/' + file;
@@ -130,8 +132,17 @@ export function activate(context: vscode.ExtensionContext) {
 
                     await renameFiles(newPath, file, oldSearch, newSearch);
                 });
-
             })
+            */
+
+            var readdirp = require('readdirp');
+            await readdirp({ root: newPath }).on('data', async (entry: any) => {
+                const filePath = newPath + '/' + entry.path;
+                await replaceInFile(filePath, oldSearch, newSearch);
+                await renameFiles(newPath, entry.path, oldSearch, newSearch);
+            });
+
+
             vscode.window.showInformationMessage('Duplicate Module duplicated ' + oldSearch + ' renamed/replaced to ' + newSearch + ' at ' + newName);
 
             if (settings.openFileAfterCopy && oldPathStats.isFile()) {
@@ -147,35 +158,10 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.window.showErrorMessage(`Error: ${errMsg}`);
         }
         return;
-
-        // The code you place here will be executed every time your command is executed
-
-        /* const foldersPath: string[] = res.fsPath.split('/');
-         const folderName = foldersPath[foldersPath.length - 1];
- 
-         const oldName = await vscode.window.showInputBox({
-             placeHolder: 'Actual module name',
-             value: folderName
-         });
-         const rootPath = res.fsPath.replace(oldName, '');
-         const newName = await vscode.window.showInputBox({
-             placeHolder: 'New module name'
-         });
- 
-         const oldFile = fs.createReadStream(res.fsPath);
-         const newFile = fs.createWriteStream(rootPath + newName);
-         const result = await oldFile.pipe(newFile);
- 
-         console.log(result);
- 
-         vscode.window.showInformationMessage('Duplicate Module will duplicate ' + oldName + ' renamed to ' + newName);*/
-
-        // Display a message box to the user
     });
 
     context.subscriptions.push(disposable);
 }
 
-// this method is called when your extension is deactivated
 export function deactivate() {
 }
