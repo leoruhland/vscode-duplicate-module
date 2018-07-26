@@ -2,7 +2,7 @@
     "name": "duplicate-module",
     "displayName": "Duplicate Module",
     "description": "Duplicate a folder, replace all strings and rename all files in this folder.",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "publisher": "LeonardoRuhland",
     "engines": {
         "vscode": "^1.23.0"
@@ -25,7 +25,6 @@
         "menus": {
             "explorer/context": [
                 {
-                    "when": "explorerResourceIsFolder",
                     "command": "extension.duplicateModule",
                     "group": "DuplicateModule@1"
                 }
